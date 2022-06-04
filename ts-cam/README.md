@@ -1,1 +1,1 @@
-Use vision Transformer to perform multi-label classification tasks and get tscam.
+Use Vision Transformer to perform multi-label classification tasks and get tscam.
