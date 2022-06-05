@@ -14,6 +14,7 @@
 这个方法为什么要这么做，能work的原因是什么？有什么优点，有什么缺点，值得我们后续工作借鉴吗，如果值得，能复现文中的结果吗？
 1. 这个方法为什么想到这么去做？文中Introduction里有一句话：The main limitation of WSSS is that the process of generating pseudo-labels from CAMs that use an image classifier is mainly focused on the most discriminative parts of the objects.即整张图片由分类任务产生的CAMs图主要关注物体最具辨别力的部分。然后作者发现，用图像块产生的CAM图拼接后的大CAM图关注的物体区域更大。如下图所示：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a65332a5fe604f45b62baf7fd7fb6958.png#pic_center)
+
 至于为什么会更大，原文中有这样一段话：When generating the CAM of the same class for image patches, the model focuses on finding the key features of the class using only the part of the object. Thus, the merged CAM of image patches highlights the object area more accurately than the CAM of a single image.
 2. 能work的原因是什么?
 首先，由image patch产生的merged CAM比image产生的CAM好；其次，缩小merged CAM和整张图片的CAM的差距，缩小特征之间的差距，使得训练好的模型直接产生的整幅图片的CAM更好。
