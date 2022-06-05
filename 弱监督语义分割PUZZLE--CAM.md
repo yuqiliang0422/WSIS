@@ -11,7 +11,6 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/107dea0ff57145ab83f5fc2ac0ddaab4.jpeg#pic_center)
 图片描述的很清晰，求出整个图像的CAM和所有块的CAM，设计一个简单的损失函数来改进最上面分支产生CAM的质量。推理阶段，不使用puzzle模块的分类器，只使用最上面的分支，来生成伪标签训练全监督模型(常规操作)。
 ## 分析：
-这个方法为什么要这么做，能work的原因是什么？有什么优点，有什么缺点，值得我们后续工作借鉴吗，如果值得，能复现文中的结果吗？
 ## 1. 这个方法为什么想到这么去做？
 文中Introduction里有一句话：The main limitation of WSSS is that the process of generating pseudo-labels from CAMs that use an image classifier is mainly focused on the most discriminative parts of the objects.即整张图片由分类任务产生的CAMs图主要关注物体最具辨别力的部分。然后作者发现，用图像块产生的CAM图拼接后的大CAM图关注的物体区域更大。如下图所示：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a65332a5fe604f45b62baf7fd7fb6958.png#pic_center)
