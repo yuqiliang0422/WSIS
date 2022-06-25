@@ -1,8 +1,3 @@
-﻿
-> 提示：文章写完后，目录可以自动生成，如何生成可参考右边的帮助文档
-
-@[TOC](为定位任务探索分层的类别激活图)
-
 ---
 文章链接：[http://mftp.mmcheng.net/Papers/21TIP_LayerCAM.pdf](http://mftp.mmcheng.net/Papers/21TIP_LayerCAM.pdf)
 代码：[https://github.com/frgfm/torch-cam](https://github.com/frgfm/torch-cam)
