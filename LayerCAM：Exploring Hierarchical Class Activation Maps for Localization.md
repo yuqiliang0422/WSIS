@@ -24,9 +24,13 @@
 $L_{\mathrm{Grad}-\mathrm{CAM}}^{c}=\operatorname{ReLU}\left(\sum_{k} \alpha_{k}^{c} A^{k}\right)$
 
 · $A$代表某个特征层，在grad-cam论文中一般指的是最后一个卷积层输出的特征层
+
 · $k$代表特征层$A$中第$k$个通道(channel)
+
 · $c$代表类别$c$
+
 · $A^{k}$代表特征层$A$中通道$k$的数据
+
 · $\alpha_{k}^{c}$代表针对$A^{k}$的权重
 
 $\alpha_{k}^{c}$的计算公式如下：
@@ -34,7 +38,9 @@ $\alpha_{k}^{c}$的计算公式如下：
 $\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{i j}^{k}}$
 
 · $y^{c}$代表网络针对类别$c$预测的分数(score)，注意这里没有通过softmax激活
+
 · $A_{i j}^{k}$代表特征层A在通道$k$中，坐标为$i$,$j$位置处的数据
+
 · $Z$等于特征层的宽度×高度
 通过计算公式可知$\alpha_{k}^{c}$就是通过预测类别$c$的预测分数$y^{c}$进行反向传播，然后利用反传到特征层A上的梯度信息计算特征层A每个通道$k$的重要程度。接着通过$\alpha$对特征层A每个通道的数据进行加权求和，最后通过ReLU激活函数得到Grad-CAM(论文中说使用ReLU是为了过滤掉Negative pixels)，而Negative pixels很可能是归属于其他类别的pixles。最后，经过简单的上采样就得到可视化结果了。 
 浅层特征层用正常grad-cam方法不好的原因在于$\alpha_{k}^{c}$是将特征层A的每个通道$k$的梯度求平均，作为每个通道$k$的权重，也就是说grad-cam只考虑捕获每个特征图的全局信息，丢失了局部差异，看下图：
