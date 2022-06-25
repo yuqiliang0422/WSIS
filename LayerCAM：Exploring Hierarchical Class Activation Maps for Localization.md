@@ -2,6 +2,7 @@
 文章链接：[http://mftp.mmcheng.net/Papers/21TIP_LayerCAM.pdf](http://mftp.mmcheng.net/Papers/21TIP_LayerCAM.pdf)
 
 代码：[https://github.com/frgfm/torch-cam](https://github.com/frgfm/torch-cam)
+
 [https://github.com/PengtaoJiang/LayerCAM-jittor](https://github.com/PengtaoJiang/LayerCAM-jittor)
 # 前言：为什么这么做？
 现有的由CNN架构产生类别激活图CAM的方法用的都是CNN最后的卷积层，最后的卷积层分辨率小，这样的类别激活图经常定位到目标物体的粗糙区域，限制了需要像素级精确物体定位任务的执行。所以，LayerCAM这篇文章的作者们就想到，可以利用CNN前面的卷积层，前面的特征层分辨率高，也许可以获得更细粒度的对象定位信息。然后把由前面的特征层产生的类别激活图和后面的特征层产生的类别激活图都用上，集成在一起，也许就可以更好地突出与对象相关的像素，事实证明确实是这样。
