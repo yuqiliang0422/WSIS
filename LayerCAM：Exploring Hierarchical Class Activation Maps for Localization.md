@@ -21,7 +21,9 @@
 简要介绍一下：我们只看最上面的Image Classification分支，首先网络进行正向传播，得到特征层A(最后一个卷积层的输出)和网络预测值y(注意，这里是softmax激活之前的数值)。假设我们想看一下网络针对Tiger Cat这个类别的感兴趣区域，假设网络针对Tiger Cat类别的预测值为$y^{c}$。接着对$y^{c}$进行反向传播，能够得到反传回特征层A的梯度信息 Á ，那么Á 就是$y^{c}$对A求得的偏导，换句话说，Á代表A中每个元素对$y^{c}$的贡献，贡献越大网络就认为越重要。然后对Á在$w$,$h$上求均值就能得到针对A每个通道的重要程度(对于类别$c$而言的)。最后进行简单的加权求和再通过ReLU就能得到文中所说的Grad-CAM。
 关于Grad-CAM总结下来就是下面这个公式：
 
-$L_{\mathrm{Grad}-\mathrm{CAM}}^{c}=\operatorname{ReLU}\left(\sum_{k} \alpha_{k}^{c} A^{k}\right)$
+$$
+L_{\mathrm{Grad}-\mathrm{CAM}}^{c}=\operatorname{ReLU}\left(\sum_{k} \alpha_{k}^{c} A^{k}\right)
+$$
 
 · $A$代表某个特征层，在grad-cam论文中一般指的是最后一个卷积层输出的特征层
 
@@ -35,7 +37,9 @@ $L_{\mathrm{Grad}-\mathrm{CAM}}^{c}=\operatorname{ReLU}\left(\sum_{k} \alpha_{k}
 
 $\alpha_{k}^{c}$的计算公式如下：
 
-$\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{i j}^{k}}$
+$$
+\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{i j}^{k}}
+$$
 
 · $y^{c}$代表网络针对类别$c$预测的分数(score)，注意这里没有通过softmax激活
 
@@ -49,13 +53,16 @@ $\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{
 可以看到，在浅层，对于大多数特征层，方差非常大，全局权重是不能代表特征图上不同位置对某一类别的重要性的，所以，浅层直接带入grad-cam得到的类别激活图不行。
 为此作者做了一个改变，不再用全局权重，而是用像素级权重，也就是对应于特征图上的一个位置，如果梯度为正，则用这个正梯度作为权重，如果梯度为负，则权重为零(也就是用个ReLU)。数学公式比较好理解(不解释)，如下：
 
-$w_{i j}^{k c}=\operatorname{relu}\left(g_{i j}^{k c}\right)$
+$$
+w_{i j}^{k c}=\operatorname{relu}\left(g_{i j}^{k c}\right)
+$$
 
 $$
 \hat{A}_{i j}^{k}=w_{i j}^{k c} \cdot A_{i j}^{k}
 $$
 
-$M^{c}=\operatorname{ReLU}\left(\sum_{k} \hat{A}^{k}\right)$
+$$M^{c}=\operatorname{ReLU}\left(\sum_{k} \hat{A}^{k}\right)
+$$
 
 总结就是：将feature map每个位置的激活值乘以一个梯度权重。
 需要注意的是，在文章的experiments中，作者有提到实现的细节，这对于最后算法的结果很重要：
