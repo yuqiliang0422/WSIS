@@ -48,6 +48,7 @@ $\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{
 ![grad-cam方差](https://img-blog.csdnimg.cn/690f356b2aac46469a274669b5f78992.png#pic_center)
 可以看到，在浅层，对于大多数特征层，方差非常大，全局权重是不能代表特征图上不同位置对某一类别的重要性的，所以，浅层直接带入grad-cam得到的类别激活图不行。
 为此作者做了一个改变，不再用全局权重，而是用像素级权重，也就是对应于特征图上的一个位置，如果梯度为正，则用这个正梯度作为权重，如果梯度为负，则权重为零(也就是用个ReLU)。数学公式比较好理解(不解释)，如下：
+
 $w_{i j}^{k c}=\operatorname{relu}\left(g_{i j}^{k c}\right)$
 
 $\hat{A}_{i j}^{k}=w_{i j}^{k c} \cdot A_{i j}^{k}$
