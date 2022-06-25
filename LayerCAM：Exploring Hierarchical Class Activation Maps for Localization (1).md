@@ -53,9 +53,11 @@ $$
 $$
 w_{i j}^{k c}=\operatorname{relu}\left(g_{i j}^{k c}\right)
 $$
+
 $$
 \hat{A}_{i j}^{k}=w_{i j}^{k c} \cdot A_{i j}^{k}
 $$
+
 $$
 M^{c}=\operatorname{ReLU}\left(\sum_{k} \hat{A}^{k}\right)
 $$
