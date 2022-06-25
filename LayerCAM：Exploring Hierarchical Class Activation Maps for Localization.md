@@ -49,8 +49,11 @@ $\alpha_{k}^{c}=\frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y^{c}}{\partial A_{
 可以看到，在浅层，对于大多数特征层，方差非常大，全局权重是不能代表特征图上不同位置对某一类别的重要性的，所以，浅层直接带入grad-cam得到的类别激活图不行。
 为此作者做了一个改变，不再用全局权重，而是用像素级权重，也就是对应于特征图上的一个位置，如果梯度为正，则用这个正梯度作为权重，如果梯度为负，则权重为零(也就是用个ReLU)。数学公式比较好理解(不解释)，如下：
 $w_{i j}^{k c}=\operatorname{relu}\left(g_{i j}^{k c}\right)$
+
 $\hat{A}_{i j}^{k}=w_{i j}^{k c} \cdot A_{i j}^{k}$
+
 $M^{c}=\operatorname{ReLU}\left(\sum_{k} \hat{A}^{k}\right)$
+
 总结就是：将feature map每个位置的激活值乘以一个梯度权重。
 需要注意的是，在文章的experiments中，作者有提到实现的细节，这对于最后算法的结果很重要：
 (1)对于vgg16的前几个特征层，产生的CAM要用GraphCut方法产生连接段(官网代码貌似没有)。
