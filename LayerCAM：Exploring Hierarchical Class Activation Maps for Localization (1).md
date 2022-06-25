@@ -67,9 +67,11 @@ $$
 需要注意的是，在文章的experiments中，作者有提到实现的细节，这对于最后算法的结果很重要：
 (1)对于vgg16的前几个特征层，产生的CAM要用GraphCut方法产生连接段(官网代码貌似没有)。
 (2)对于vgg16的前3个stage的特征层，产生的CAM值小，不能直接和后面的stage相加，所以用下面的式子scale一下：
+
 $$
 \hat{M}^{c}=\tanh \left(\frac{\gamma * M^{c}}{\max \left(M^{c}\right)}\right)
 $$
+
 (3)最后融合的时候，先归一化，然后用最大值操作融合不同layer的CAM。
 
 ---
